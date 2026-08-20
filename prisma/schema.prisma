@@ -1,0 +1,73 @@
+// WesMaps Seat Tracker - database schema
+// Run `npx prisma migrate dev --name init` after setting DATABASE_URL in .env
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique // must end in @wesleyan.edu, enforced in app code
+  phone         String?  // E.164 format, e.g. +18605551234, optional (SMS opt-in)
+  notifyEmail   Boolean  @default(true)
+  notifySms     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  watches       Watch[]
+  loginCodes    LoginCode[]
+}
+
+// One-time login codes emailed to verify @wesleyan.edu ownership (no password needed)
+model LoginCode {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// A specific course section a user wants to be notified about
+model Watch {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // WesMaps identifiers - crse is WesMaps' internal course id (e.g. "003328"),
+  // term is the WesMaps term code (e.g. "1269" = Fall 2026), section label is
+  // stored for display only since crse+term is often shared across sections.
+  crse          String
+  term          String
+  sectionLabel  String   // e.g. "COMP212-01"
+  courseTitle   String   // e.g. "Computer Science II" (denormalized for display/notifications)
+
+  active        Boolean  @default(true) // set to false once notified & fulfilled, or user pauses it
+  lastSeats     Int?     // last known seats-available count, used to detect 0 -> >0 transitions
+  notifiedAt    DateTime?
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, crse, term, sectionLabel])
+  @@index([crse, term])
+}
+
+// Cached snapshot of every polled section, shared across all users watching it,
+// so the cron job only needs to fetch each distinct WesMaps page once per run.
+model CourseSnapshot {
+  id            String   @id @default(cuid())
+  crse          String
+  term          String
+  sectionLabel  String
+  seatsAvailable Int
+  enrollmentLimit Int
+  checkedAt     DateTime @default(now())
+
+  @@unique([crse, term, sectionLabel])
+}
