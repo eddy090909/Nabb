@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "WesSeats - Wesleyan Seat Availability Alerts",
-  description: "Get notified the instant a seat opens up in a Wesleyan course.",
+  title: "OpenSeat - The easiest way in to a course you're trying to get into",
+  description: "Get an instant notification the moment a seat opens in a course.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

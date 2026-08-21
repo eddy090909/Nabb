@@ -1,4 +1,4 @@
-# WesSeats — Wesleyan Seat Availability Alerts
+# OpenSeat — Wesleyan Seat Availability Alerts
 
 Notifies students by email/SMS the moment a seat opens up in a WesMaps course
 section they're watching.

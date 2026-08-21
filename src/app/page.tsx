@@ -106,9 +106,12 @@ export default function Home() {
 
   return (
     <main style={{ maxWidth: 640, margin: "0 auto", padding: "40px 20px" }}>
-      <h1 style={{ marginBottom: 4 }}>WesSeats</h1>
+      <h1 style={{ marginBottom: 4 }}>OpenSeat</h1>
+      <p style={{ color: "#555", marginTop: 0, marginBottom: 4 }}>
+        The easiest way in to a course you're trying to get into.
+      </p>
       <p style={{ color: "#555", marginTop: 0 }}>
-        Get an email/text the moment a seat opens in a Wesleyan course.
+        Get an instant notification the moment a seat opens.
       </p>
 
       {!signedIn && (
