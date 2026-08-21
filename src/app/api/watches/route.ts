@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
   }
 
   // Grab current seat count immediately so the watch starts with an accurate baseline
-  // rather than notifying incorrectly on the very next cron run.
+  // rather than notifying incorrectly on the very next cron run. null is fine outside
+  // registration windows (seats not published yet).
   let lastSeats: number | null = null;
   try {
     const info = await fetchSeatInfoForSection(crse, term, sectionLabel);
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
     where: {
       userId_crse_term_sectionLabel: { userId: user.id, crse, term, sectionLabel },
     },
-    update: { active: true },
+    update: { active: true, lastSeats, courseTitle },
     create: {
       userId: user.id,
       crse,
