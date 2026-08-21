@@ -16,10 +16,10 @@
  *
  * NOTE: WesMaps' markup is old-school ASP/HTML and can shift over time. The
  * parsing here works off plain text extracted from the page rather than
- * brittle CSS selectors, but you should re-verify against the live site
- * before relying on this in production, and keep polling frequency modest
- * (see CHECK_INTERVAL guidance in the README) to stay a good citizen of
- * Wesleyan's servers.
+ * brittle CSS selectors. "Seats Available:" is typically only present during
+ * live registration windows — null seatsAvailable outside those windows is
+ * expected (see src/lib/registration.ts). Re-verify during add/drop, and keep
+ * polling gated to those windows so we stay a good citizen of Wesleyan's servers.
  */
 
 import * as cheerio from "cheerio";
@@ -28,7 +28,7 @@ const BASE = "https://owaprod-pub.wesleyan.edu/reg/!wesmaps_page.html";
 
 // Be a polite scraper: identify ourselves and don't hammer the server.
 const FETCH_HEADERS = {
-  "User-Agent": "WesleyanSeatTracker/0.1 (student-built tool; contact: <your-email>)",
+  "User-Agent": "Nabb/0.1 (student-built tool; contact: <your-email>)",
 };
 
 export interface ListedSection {

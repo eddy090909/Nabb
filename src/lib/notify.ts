@@ -14,10 +14,10 @@ export async function sendSeatAlertEmail(to: string, sectionLabel: string, cours
     return;
   }
   await resend.emails.send({
-    from: process.env.NOTIFY_FROM_EMAIL || "seats@yourdomain.edu",
+    from: process.env.NOTIFY_FROM_EMAIL || "alerts@nabb.app",
     to,
     subject: `Seat open: ${sectionLabel} - ${courseTitle}`,
-    text: `${sectionLabel} (${courseTitle}) now has ${seats} seat${seats === 1 ? "" : "s"} available.\n\nRegister now in WesPortal - open seats can disappear within minutes.\n\nYou're getting this because you set a watch on this section. Manage your watches at ${process.env.APP_URL || "your app URL"}.`,
+    text: `${sectionLabel} (${courseTitle}) now has ${seats} seat${seats === 1 ? "" : "s"} available.\n\nRegister now in WesPortal - open seats can disappear within minutes.\n\nYou're getting this because you set a watch on this section in Nabb. Manage your watches at ${process.env.APP_URL || "your Nabb URL"}.`,
   });
 }
 
@@ -29,7 +29,7 @@ export async function sendSeatAlertSms(to: string, sectionLabel: string, seats: 
   await twilioClient.messages.create({
     from: process.env.TWILIO_FROM_NUMBER,
     to,
-    body: `Seat open: ${sectionLabel} now has ${seats} seat(s) available. Register in WesPortal ASAP.`,
+    body: `Nabb: ${sectionLabel} now has ${seats} seat(s) available. Register in WesPortal ASAP.`,
   });
 }
 
@@ -39,9 +39,9 @@ export async function sendLoginCodeEmail(to: string, code: string) {
     return;
   }
   await resend.emails.send({
-    from: process.env.NOTIFY_FROM_EMAIL || "seats@yourdomain.edu",
+    from: process.env.NOTIFY_FROM_EMAIL || "alerts@nabb.app",
     to,
-    subject: "Your sign-in code",
-    text: `Your sign-in code is: ${code}\n\nIt expires in 10 minutes.`,
+    subject: "Your Nabb sign-in code",
+    text: `Your Nabb sign-in code is: ${code}\n\nIt expires in 10 minutes.`,
   });
 }
