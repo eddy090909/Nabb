@@ -7,6 +7,32 @@ seat opens.
 Nabb never asks for student passwords. It reads public WesMaps pages and signs
 students in with a one-time code sent to their `@wesleyan.edu` address.
 
+<p align="center">
+  <img src="docs/screenshots/desktop-light.png" alt="Nabb signed in: next alert window banner, where-to-look links, course search results and watched sections" width="640">
+</p>
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/sign-in.png" alt="Nabb sign-in page with Wesleyan email code login" width="100%"><br>
+      <sub>Sign in with a one-time code, no password</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/mobile.png" alt="Nabb course search on a phone" width="260"><br>
+      <sub>Works on phones</sub>
+    </td>
+  </tr>
+</table>
+
+<details>
+<summary>Dark mode</summary>
+<p align="center">
+  <img src="docs/screenshots/desktop-dark.png" alt="Nabb in dark mode" width="640">
+</p>
+</details>
+
+<sub>Screenshots use sample courses and watches.</sub>
+
 ## Wesleyan's course sites right now (Nov 2026)
 
 Wesleyan is part-way through a switch, and the sites don't agree with each other:
