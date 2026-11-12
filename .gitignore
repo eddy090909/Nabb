@@ -9,3 +9,4 @@ node_modules/
 !.neon
 .vercel
 .env*
+*.tsbuildinfo
